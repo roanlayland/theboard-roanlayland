@@ -9,6 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
+    /* Tell the browser this page manages its own theming. Without this,
+       a browser or OS in dark mode will force-darken the page with its own
+       heuristics — which skip gradient backgrounds (like body's) while
+       inverting everything layered on top, producing a half-dark mess.
+       It also keeps native <select> dropdowns and scrollbars light instead
+       of letting them follow the OS. The night-mode toggle overrides this
+       on documentElement so those native controls follow along properly. */
+    color-scheme: only light;
     --paper:#EDEEE9;
     --paper-2:#E4E6DF;
     --ink:#1E2A22;
@@ -2811,6 +2819,8 @@ if(compareToggleEl) compareToggleEl.addEventListener("click", ()=>{
 const nightToggle = document.getElementById("night-toggle");
 if(nightToggle) nightToggle.addEventListener("click", ()=>{
   const on = document.body.classList.toggle("night");
+  /* native controls (select popups, scrollbars) follow the site, not the OS */
+  document.documentElement.style.colorScheme = on ? "dark" : "only light";
   nightToggle.setAttribute("aria-pressed", on ? "true" : "false");
   nightToggle.textContent = on ? "◑ Day mode" : "◐ Night mode";
 });
