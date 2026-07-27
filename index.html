@@ -354,9 +354,16 @@
      accent (turf/gold/brick = low/mid/high, echoing the range + heat map)
      =================================================================== */
 
-  /* give the paper some quiet depth instead of a flat fill */
+  /* give the paper some quiet depth instead of a flat fill.
+     background-IMAGE, not the background shorthand — the shorthand resets
+     background-color, which left nothing opaque underneath. Safari can drop
+     the paint on layered gradients with background-attachment:fixed, and
+     without a solid colour beneath it you see straight through to the
+     browser canvas — which is near-black when the OS is in dark mode. */
+  html{background-color:var(--paper)}
   body{
-    background:
+    background-color:var(--paper);
+    background-image:
       radial-gradient(1100px 560px at 80% -10%, rgba(47,82,51,.055), transparent 62%),
       linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
     background-attachment:fixed;
