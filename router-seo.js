@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE BOARD — router + SEO layer   v2
+   THE BOARD — router + SEO layer   v3
    --------------------------------------------------------------------------
    HOW TO INSTALL
    Paste this entire block inside a SECOND <script> tag, immediately before
@@ -38,6 +38,66 @@
   const CANONICAL_ORIGIN = location.origin;
   const BRAND = "The Board";
 
+  /* ---- Methodology page content. Single source of truth: prerender.mjs
+     reads this constant straight out of this file, so edit it here only. ---- */
+  const METHODOLOGY_HTML = `<div class="article-head">
+  <div class="deep-dive-badge">Methodology</div>
+  <h1 class="article-title">Why These Rankings Change When Your League Does</h1>
+  <p class="article-dek">Thirty boards instead of one list. What goes into a value, how the tiers are calculated, and where the arguments live.</p>
+  <div class="dd-byline"><div class="dd-avatar">RL</div><div class="dd-byline-meta"><b>Roan Layland</b>Updated for the 2026 season</div></div>
+</div>
+<div class="article-body">
+  <p>Every set of rankings you will read this summer is a single list. One number per player, handed to an 8-team half-PPR league and a 16-team superflex league alike, with a note near the bottom telling you to adjust for your format.</p>
+  <p>Adjusting for format is the hardest arithmetic in fantasy football. It is also the part nobody does at the draft table, because there is no time and no reliable way to do it in your head.</p>
+  <p>This board does it in advance. Five team sizes, three scoring formats, two roster types: thirty separate boards, each built from scratch with its own values, tiers and drop-offs. Change a setting at the top of the page and you are not re-sorting one list. You are loading a different board.</p>
+  <p class="pullquote">One list cannot be right for thirty different leagues.</p>
+
+  <h2>What goes into a value</h2>
+  <p>Prior production comes first, measured in points per game rather than season totals. A player who missed four games should not be penalised twice for it.</p>
+  <p>Positional finish sits alongside it. A receiver averaging 16.2 points means one thing if that was WR7 in a high-scoring year and something else if it was WR14. Several seasons are read together, so no single outlier decides a projection on its own.</p>
+  <p>Offensive environment comes next. A player&rsquo;s ceiling is limited by how often his team reaches scoring position. Every player carries his team&rsquo;s points per game and its projected change from last season. That is the difference between a target hog on an offense about to improve and a target hog on one about to fall apart.</p>
+  <p>Those feed a projection published as three numbers rather than one: floor, projection, ceiling. A 15.0 that swings between 9 and 22 is a different roster decision than a 15.0 that stays between 13 and 17. A ranking that shows you only the 15.0 cannot tell you which one you are drafting.</p>
+  <p>ADP is used last, as a check rather than an input. Where the board disagrees with the market by three spots or more, the row says so: green where the market is late, red where the room is reaching. Those disagreements are the point of having a board at all.</p>
+
+  <h2>Replacement level</h2>
+  <p>A player&rsquo;s value is not what he scores. It is what he scores above the player you could have had for free.</p>
+  <p>In an 8-team league, the worst starting running back is genuinely good. There are sixteen starting jobs and the waiver wire still holds real contributors. In a 16-team league, the worst starting running back is somebody&rsquo;s handcuff. Same production, different value, because the baseline moved.</p>
+  <p>This is why the Value column is not points. It is an asset score, rebuilt at every league size rather than scaled from one master number. It is what the trade analyzer totals, what the draft room sorts by, and what the tiers are cut from.</p>
+
+  <h2>Quarterbacks and superflex</h2>
+  <p>Quarterbacks get one deliberate exception. PPR settings barely affect quarterback scoring, so quarterback values ignore the scoring tab entirely.</p>
+  <p>Superflex is what moves them, and it moves them a long way. In a league where you can start two quarterbacks, the position stops being optional and becomes the scarcest thing on the board. Change that setting and everything above the quarterbacks reshuffles.</p>
+
+  <h2>How the tiers are made</h2>
+  <p>Tiers here are calculated, not drawn by hand. Thirty boards would mean thirty sets of tiers, and nobody maintains that manually. Anyone claiming to has drawn one set and copied it across the rest.</p>
+  <p>The method is optimal one-dimensional clustering. Given a list of values and a target number of tiers, it finds the exact split points that minimise the spread within each tier, which is the same as maximising the drop-off between them. It is exact rather than approximate, and it has no random element, so the same data always produces the same tiers.</p>
+  <p class="pullquote">A tier break should mark a real cliff, not a round number.</p>
+  <p>The simpler approach, breaking whenever the gap between two players exceeds some threshold, fails in a predictable way. An absolute threshold splits the top of the board into fragments, where gaps between elite players are naturally large, then leaves the entire back half in one undifferentiated block. A percentage threshold does the reverse. Clustering handles both ends without being told to, because it solves the whole board at once instead of judging one gap at a time.</p>
+  <p>Two players with identical values are never split into different tiers. If the math wants a break between them, the break moves.</p>
+
+  <h2>Where the board ends</h2>
+  <p>A player appears only if his value clears zero, meaning he projects to be worth more than a freely available replacement, both at the 10-team baseline and at the size you have selected.</p>
+  <p>Shallow leagues raise replacement level. A player who is marginally positive in a 10-team can go negative in an 8-team, and he correctly disappears. The board stops where value stops, rather than at a round number like 200.</p>
+
+  <h2>Reading the board</h2>
+  <p>Range bars are scaled within the tab you are on, not across the whole board. That keeps the widths comparable among the players you are actually choosing between. A tight end&rsquo;s range against a running back&rsquo;s on a shared scale would tell you nothing useful.</p>
+  <p>Volatility is neutral. It runs from 0 to 100 and measures how wide a player&rsquo;s range of outcomes is, not how good they are. A 78 is not a warning. It is a wide spread: a problem if you are protecting a lead in November, and what you want if you are chasing one.</p>
+
+  <h2>Draft pick values</h2>
+  <p>Pick values come off the live board rather than a fixed curve. A pick is worth the average value of the players ranked around that slot, two back and one forward, so it moves as the rankings move and adjusts to league size automatically.</p>
+  <p>Picks are stored as overall numbers rather than round and slot. Overall pick 15 is 2.05 in a 10-team and 2.07 in an 8-team, and it is priced correctly in both.</p>
+
+  <h2>Where the arguments live</h2>
+  <p>Numbers tell you what a player is worth. They do not tell you why, and why is where drafts are won.</p>
+  <p>Deep Dives are long breakdowns of the players shaping the top of the board, the names where being right or wrong decides a season. Values covers where the market is leaving points on the table. Overpriced is the same instinct reversed, aimed at names the room is reaching for a round early. Bold Predictions are the calls worth being wrong about loudly.</p>
+  <p>Each one is tied to a specific player and a specific number on the board.</p>
+
+  <h2>What this does not do</h2>
+  <p>Projections are wrong. All of them, every season. What this method buys you is not certainty about individual players; it is that the structure around them is right. The tiers break where the board breaks. The values reflect your league instead of somebody else&rsquo;s. Where the market and the board disagree, you can see exactly where.</p>
+  <p>The board also knows nothing about your roster. A value is a price, not a recommendation. If it calls a trade even and you need a running back this week, take the running back.</p>
+  <p>Use it for the part of drafting that is arithmetic, and it gives you back the time for the part that is judgement.</p>
+</div>`;
+
   /* ---------------------------------------------------------------- utils */
   const slugify = (s) =>
     String(s || "")
@@ -55,6 +115,7 @@
     "Overpriced": "overpriced",
     "Bold Predictions": "bold-predictions",
     "Trade Analyzer": "trade-analyzer",
+    "Methodology": "methodology",
     "Draft Room": "draft-room"
   };
   const SLUG_SECTION = Object.fromEntries(
@@ -140,7 +201,7 @@
       return Object.assign({ type: "section", section,
         mode: (seg[1] || "").toLowerCase() === "picks" ? "picks" : "players" }, fmt);
 
-    if (section === "Draft Room")
+    if (section === "Draft Room" || section === "Methodology")
       return Object.assign({ type: "section", section }, fmt);
 
     if (section && LANES.includes(section))
@@ -302,6 +363,11 @@
           desc: `Free 2026 fantasy football trade calculator. Player values adjust for league size (8–16 team), PPR, Half-PPR, Non-PPR and Superflex.`
         };
       }
+      if (s === "Methodology")
+        return {
+          title: `How These Rankings Are Built — Methodology | ${BRAND}`,
+          desc: `The method behind the board: replacement-level values rebuilt for every league size, tiers cut by optimal one-dimensional clustering, and projections published as ranges.`
+        };
       if (s === "Draft Room")
         return {
           title: `Live Fantasy Football Draft Board 2026 — Free Draft Tracker | ${BRAND}`,
@@ -405,6 +471,13 @@
       text-transform:uppercase;padding:7px 12px;transition:border-color .12s,color .12s}
     .tb-share a:hover,.tb-share button:hover{border-color:var(--turf);color:var(--turf)}
     .tb-share button.done{border-color:var(--turf);color:var(--turf)}
+    #method-view{padding-top:8px;max-width:760px}
+    #method-view .article-body h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;
+      font-size:17px;text-transform:uppercase;letter-spacing:.12em;color:var(--turf);
+      margin:38px 0 14px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
+    #method-view .article-body h2:first-child{margin-top:0}
+    .tb-method-link{color:var(--turf);font-weight:600;text-decoration:none;white-space:nowrap}
+    .tb-method-link:hover{text-decoration:underline}
     #tb-seo{max-width:760px}
     #tb-seo h1{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:38px;
       line-height:1.02;text-transform:uppercase;margin:6px 0 10px}
@@ -458,6 +531,74 @@
     };
   }
 
+  /* ------------------------------------------------- methodology page */
+  function ensureMethodView() {
+    let mv = document.getElementById("method-view");
+    if (mv) return mv;
+    mv = document.createElement("div");
+    mv.id = "method-view";
+    mv.className = "hide";
+    mv.innerHTML = METHODOLOGY_HTML;
+    const anchor = document.getElementById("draft-view") ||
+                   document.getElementById("trade-view") ||
+                   document.querySelector(".wrap");
+    if (anchor && anchor.parentNode && anchor !== document.querySelector(".wrap"))
+      anchor.insertAdjacentElement("afterend", mv);
+    else if (anchor) anchor.appendChild(mv);
+    return mv;
+  }
+
+  function showMethodology() {
+    activeSection = "Methodology";
+    if (typeof stopCarousel === "function") stopCarousel();
+    ["list-view", "detail-view", "editorial-view", "article-view",
+     "trade-view", "draft-view", "compare-tray"].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add("hide");
+    });
+    const header = document.querySelector("header");
+    if (header) header.style.display = "none";
+    const note = document.querySelector(".note");
+    if (note) note.style.display = "none";
+    ensureMethodView().classList.remove("hide");
+    if (typeof renderSideNav === "function") renderSideNav();
+    const rp = document.getElementById("read-progress");
+    if (rp) rp.style.background = "var(--turf)";
+    window.scrollTo({ top: 0 });
+  }
+
+  function installMethodology() {
+    /* nav button, sitting directly under Trade Analyzer */
+    const list = document.getElementById("side-nav-list");
+    if (list && !list.querySelector('[data-section="Methodology"]')) {
+      const after = list.querySelector('[data-section="Trade Analyzer"]');
+      const btn = document.createElement("button");
+      btn.className = "side-nav-item";
+      btn.setAttribute("data-section", "Methodology");
+      btn.textContent = "Methodology";
+      if (after) after.insertAdjacentElement("afterend", btn);
+      else list.appendChild(btn);
+      if (typeof SECTIONS !== "undefined" && Array.isArray(SECTIONS) &&
+          SECTIONS.indexOf("Methodology") === -1) {
+        const i = SECTIONS.indexOf("Trade Analyzer");
+        SECTIONS.splice(i === -1 ? SECTIONS.length : i + 1, 0, "Methodology");
+      }
+    }
+    ensureMethodView();
+    /* permanent link under every board view */
+    const note = document.querySelector(".note");
+    if (note && !note.querySelector(".tb-method-link")) {
+      const a = document.createElement("a");
+      a.className = "tb-method-link";
+      a.href = "/methodology";
+      a.textContent = "How these rankings are built \u2192";
+      a.onclick = (e) => { e.preventDefault(); showSection("Methodology"); };
+      note.appendChild(document.createTextNode(" "));
+      note.appendChild(a);
+    }
+    if (typeof renderSideNav === "function") renderSideNav();
+  }
+
   function dropSeoBlock() {
     const el = document.getElementById("tb-seo");
     if (el) el.remove();
@@ -474,6 +615,14 @@
 
   const origShowSection = showSection;
   showSection = function (section) {
+    if (section === "Methodology") {
+      showMethodology();
+      go({ type: "section", section: "Methodology" });
+      dropSeoBlock();
+      return;
+    }
+    const mv = document.getElementById("method-view");
+    if (mv) mv.classList.add("hide");
     origShowSection(section);
     if (section === "Rankings") go({ type: "rankings", tab: active });
     else go({ type: "section", section,
@@ -541,6 +690,8 @@
   })();
 
   /* --------------------------------------------------------------- boot */
+  installMethodology();
+
   const boot = window.__TB_ROUTE__ ? Object.assign(parseRoute(), window.__TB_ROUTE__) : parseRoute();
   applyFormat(boot);
 
