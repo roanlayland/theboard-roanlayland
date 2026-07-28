@@ -181,8 +181,7 @@
   }
 
   function goBack(fallbackState) {
-    if (history.state && history.state.tb && history.length > 1) history.back();
-    else applyRoute(fallbackState);
+    applyRoute(fallbackState);
   }
 
   function applyRoute(r) {
