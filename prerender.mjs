@@ -325,7 +325,68 @@ async function main() {
     urls.push({ loc, pri: "0.9", freq: "daily" });
   }
   console.log(`· ${RANKING_PAGES.length} rankings pages`);
+/* ---- tool pages ---- */
+  const top12 = board(players, { teams: "10", scoring: "full_ppr", roster: "1qb" }).slice(0, 12);
+  const topList = top12.map((p, i) =>
+    `<li>${i + 1}. <a href="/player/${slugify(p.name)}">${esc(p.name)}</a> — value ${Math.round(baseValue(p, "full_ppr", "1qb"))}</li>`).join("");
 
+  const TOOLS = [
+    {
+      section: "Trade Analyzer",
+      slug: "trade-analyzer",
+      title: `Fantasy Football Trade Value Calculator 2026 — Players & Draft Picks | ${BRAND}`,
+      desc: `Free 2026 fantasy football trade calculator. Values adjust for 8-16 team leagues, PPR, Half-PPR, Non-PPR and Superflex, and it prices draft picks too.`,
+      seo: `<article>
+  <h1>2026 Fantasy Football Trade Value Calculator</h1>
+  <p>Add the players on each side of a proposed deal and this calculator totals each side's value and tells you which way it tilts. Unlike a fixed trade chart, every value is replacement-adjusted for your league: the same player is worth more in a 16-team league than an 8-team one, and quarterbacks are worth far more in Superflex.</p>
+  <h2>What it adjusts for</h2>
+  <ul>
+    <li>League size, from 8-team through 16-team</li>
+    <li>Full PPR, Half-PPR and Non-PPR scoring</li>
+    <li>1QB and Superflex roster settings</li>
+    <li>Draft picks, priced off the players ranked around that slot</li>
+  </ul>
+  <h2>Highest trade values right now</h2>
+  <ul>${topList}</ul>
+  <p>Values by ${esc(AUTHOR)}, updated through the 2026 draft season.</p>
+</article>`
+    },
+    {
+      section: "Draft Room",
+      slug: "draft-room",
+      title: `Live Fantasy Football Draft Board 2026 — Free Draft Tracker | ${BRAND}`,
+      desc: `A free live draft board for your 2026 fantasy draft. Cross players off as they are picked, track positional runs, and see best available at a glance.`,
+      seo: `<article>
+  <h1>2026 Live Fantasy Football Draft Board</h1>
+  <p>A free draft tracker for draft night. Tap a name the moment it is called and it comes off the board; tap again if you mis-clicked. No signup, no account, and your picks survive a refresh mid-draft.</p>
+  <h2>What it shows you</h2>
+  <ul>
+    <li>Best available at every position, updated after each pick</li>
+    <li>How many players at each position are already gone</li>
+    <li>The last twelve picks, so you can see a positional run forming</li>
+    <li>Round, pick and overall number as the draft moves</li>
+  </ul>
+  <h2>Top of the board</h2>
+  <ul>${topList}</ul>
+  <p>Rankings by ${esc(AUTHOR)}, adjustable for league size, scoring format and Superflex.</p>
+</article>`
+    }
+  ];
+
+  for (const t of TOOLS) {
+    const toolUrl = SITE + "/" + t.slug;
+    await write(`${t.slug}.html`, stamp(tpl, {
+      title: t.title, desc: t.desc, url: toolUrl, seo: t.seo,
+      route: { type: "section", section: t.section },
+      jsonld: {
+        "@context": "https://schema.org", "@type": "WebApplication",
+        name: t.title, description: t.desc, url: toolUrl, publisher,
+        applicationCategory: "SportsApplication",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
+      }
+    }));
+  }
+  console.log(`· 2 tool pages`);
   /* ---- player pages ---- */
   const base = board(players, { teams: "10", scoring: "full_ppr", roster: "1qb" });
   const posCounter = {};
