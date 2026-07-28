@@ -9,21 +9,21 @@
      If you ever change the URL, update the two lines marked ↓ URL.
      Everything else can stay as-is.
      ============================================================ -->
-<title id="doc-title">Live Fantasy Football Draft Board 2026 — Free Draft Tracker | The Board</title>
-<meta name="description" content="A free live draft board for your 2026 fantasy draft. Cross players off as they are picked, track positional runs, and see best available at a glance.">
+<title id="doc-title">Fantasy Football Draft Pick Trade Value Calculator 2026 | The Board</title>
+<meta name="description" content="Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8-16 team leagues, PPR and Superflex.">
 <meta name="author" content="Roan Layland">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://theboard-roanlayland-m16h.vercel.app/draft-room">          <!-- ↓ URL -->
+<link rel="canonical" href="https://theboard-roanlayland-m16h.vercel.app/trade-analyzer/picks">          <!-- ↓ URL -->
 
 <!-- how the link renders when shared in a group chat, Discord, Reddit, or X -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="The Board">
-<meta property="og:title" content="Live Fantasy Football Draft Board 2026 — Free Draft Tracker | The Board">
-<meta property="og:description" content="A free live draft board for your 2026 fantasy draft. Cross players off as they are picked, track positional runs, and see best available at a glance.">
-<meta property="og:url" content="https://theboard-roanlayland-m16h.vercel.app/draft-room">     <!-- ↓ URL -->
+<meta property="og:title" content="Fantasy Football Draft Pick Trade Value Calculator 2026 | The Board">
+<meta property="og:description" content="Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8-16 team leagues, PPR and Superflex.">
+<meta property="og:url" content="https://theboard-roanlayland-m16h.vercel.app/trade-analyzer/picks">     <!-- ↓ URL -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Live Fantasy Football Draft Board 2026 — Free Draft Tracker | The Board">
-<meta name="twitter:description" content="A free live draft board for your 2026 fantasy draft. Cross players off as they are picked, track positional runs, and see best available at a glance.">
+<meta name="twitter:title" content="Fantasy Football Draft Pick Trade Value Calculator 2026 | The Board">
+<meta name="twitter:description" content="Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8-16 team leagues, PPR and Superflex.">
 <meta property="og:image" content="https://theboard-roanlayland.vercel.app/preview.png">
 <meta name="twitter:image" content="https://theboard-roanlayland.vercel.app/preview.png">
 <!-- favicon, drawn inline so there's no second file to manage -->
@@ -792,8 +792,8 @@
     a,button{color:#000!important}
   }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Live Fantasy Football Draft Board 2026 — Free Draft Tracker | The Board","description":"A free live draft board for your 2026 fantasy draft. Cross players off as they are picked, track positional runs, and see best available at a glance.","url":"https://theboard-roanlayland-m16h.vercel.app/draft-room","publisher":{"@type":"Organization","name":"The Board","url":"https://theboard-roanlayland-m16h.vercel.app"},"applicationCategory":"SportsApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
-<script>window.__TB_ROUTE__={"type":"section","section":"Draft Room","mode":"players"};</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Fantasy Football Draft Pick Trade Value Calculator 2026 | The Board","description":"Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8-16 team leagues, PPR and Superflex.","url":"https://theboard-roanlayland-m16h.vercel.app/trade-analyzer/picks","publisher":{"@type":"Organization","name":"The Board","url":"https://theboard-roanlayland-m16h.vercel.app"},"applicationCategory":"SportsApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<script>window.__TB_ROUTE__={"type":"section","section":"Trade Analyzer","mode":"picks"};</script>
 </head>
 <body>
 
@@ -867,18 +867,17 @@
 
   <div id="tb-seo">
 <article>
-  <h1>2026 Live Fantasy Football Draft Board</h1>
-  <p>A free draft tracker for draft night. Tap a name the moment it is called and it comes off the board; tap again if you mis-clicked. No signup, no account, and your picks survive a refresh mid-draft.</p>
-  <h2>What it shows you</h2>
+  <h1>2026 Fantasy Football Draft Pick Trade Value Calculator</h1>
+  <p>Most pick charts are a fixed curve someone drew once. This one is derived from the board: a pick is worth the average value of the players ranked around that slot, so it moves as the rankings move and it adjusts to your league size automatically.</p>
+  <h2>How a pick is priced</h2>
   <ul>
-    <li>Best available at every position, updated after each pick</li>
-    <li>How many players at each position are already gone</li>
-    <li>The last twelve picks, so you can see a positional run forming</li>
-    <li>Round, pick and overall number as the draft moves</li>
+    <li>Averaged across a four-pick window that leans backwards — two picks before, one after</li>
+    <li>Slots past the end of the ranked board are worth nothing, not a fraction</li>
+    <li>Picks are stored as overall numbers, so 1.15 in a 10-team relabels correctly as 2.07 in an 8-team</li>
+    <li>Adjusts for PPR, Half-PPR, Non-PPR and Superflex</li>
   </ul>
-  <h2>Top of the board</h2>
-  <ul><li>1. <a href="/player/jahmyr-gibbs">Jahmyr Gibbs</a> — value 188</li><li>2. <a href="/player/bijan-robinson">Bijan Robinson</a> — value 188</li><li>3. <a href="/player/christian-mccaffrey">Christian McCaffrey</a> — value 186</li><li>4. <a href="/player/jamarr-chase">Ja&#39;Marr Chase</a> — value 184</li><li>5. <a href="/player/puka-nacua">Puka Nacua</a> — value 173</li><li>6. <a href="/player/jaxon-smith-njigba">Jaxon Smith-Njigba</a> — value 171</li><li>7. <a href="/player/amon-ra-st-brown">Amon-Ra St. Brown</a> — value 159</li><li>8. <a href="/player/jonathan-taylor">Jonathan Taylor</a> — value 140</li><li>9. <a href="/player/ceedee-lamb">CeeDee Lamb</a> — value 136</li><li>10. <a href="/player/rashee-rice">Rashee Rice</a> — value 132</li><li>11. <a href="/player/drake-london">Drake London</a> — value 132</li><li>12. <a href="/player/justin-jefferson">Justin Jefferson</a> — value 125</li></ul>
-  <p>Rankings by Roan Layland, adjustable for league size, scoring format and Superflex.</p>
+  <p>Trading players instead? Use the <a href="/trade-analyzer">player trade value calculator</a>.</p>
+  <p>Pick values by Roan Layland, updated through the 2026 draft season.</p>
 </article>
 </div>
     <div id="list-view">
