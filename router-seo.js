@@ -571,7 +571,8 @@
     /* nav button, sitting directly under Trade Analyzer */
     const list = document.getElementById("side-nav-list");
     if (list && !list.querySelector('[data-section="Methodology"]')) {
-      const after = list.querySelector('[data-section="Trade Analyzer"]');
+      const after = list.querySelector('[data-section="Draft Room"]') ||
+                    list.querySelector('[data-section="Trade Analyzer"]');
       const btn = document.createElement("button");
       btn.className = "side-nav-item";
       btn.setAttribute("data-section", "Methodology");
@@ -580,7 +581,7 @@
       else list.appendChild(btn);
       if (typeof SECTIONS !== "undefined" && Array.isArray(SECTIONS) &&
           SECTIONS.indexOf("Methodology") === -1) {
-        const i = SECTIONS.indexOf("Trade Analyzer");
+        const i = SECTIONS.indexOf("Draft Room");
         SECTIONS.splice(i === -1 ? SECTIONS.length : i + 1, 0, "Methodology");
       }
     }
