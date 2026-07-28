@@ -1,0 +1,40 @@
+name: Refresh from Google Sheets
+
+# Rebuilds the prerendered pages so search engines see current rankings.
+# Runs every morning, and you can fire it by hand from the Actions tab
+# right after you edit the sheet.
+
+on:
+  schedule:
+    - cron: "0 11 * * *"      # 11:00 UTC daily — ~6am ET
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Prerender
+        run: node prerender.mjs
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://theboard-roanlayland.vercel.app' }}
+
+      - name: Commit if anything changed
+        run: |
+          git config user.name  "board-bot"
+          git config user.email "board-bot@users.noreply.github.com"
+          git add -A
+          if git diff --staged --quiet; then
+            echo "No changes."
+          else
+            git commit -m "chore: refresh prerendered pages"
+            git push
+          fi
