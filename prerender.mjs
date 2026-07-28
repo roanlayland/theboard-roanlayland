@@ -288,6 +288,14 @@ async function main() {
   if (!/<div id="list-view">/.test(tpl))
     throw new Error("index.html doesn't look like the expected template (no #list-view).");
 
+  /* Methodology copy lives in router-seo.js so there is only one copy of it. */
+  let methodHtml = "";
+  try {
+    const routerSrc = await fs.readFile(path.join(OUT, "router-seo.js"), "utf8");
+    const m = routerSrc.match(/const METHODOLOGY_HTML = `([\s\S]*?)`;/);
+    if (m) methodHtml = m[1];
+  } catch (e) { console.warn("  ! could not read router-seo.js for methodology copy"); }
+
   const players = toObjects(await grab(PLAYERS_CSV)).filter((p) => p.name);
   console.log(`· ${players.length} players`);
 
@@ -295,7 +303,8 @@ async function main() {
     { loc: "/", pri: "1.0", freq: "daily" },
     { loc: "/trade-analyzer", pri: "0.9", freq: "weekly" },
     { loc: "/trade-analyzer/picks", pri: "0.8", freq: "weekly" },
-    { loc: "/draft-room", pri: "0.9", freq: "weekly" }
+    { loc: "/draft-room", pri: "0.9", freq: "weekly" },
+    { loc: "/methodology", pri: "0.8", freq: "monthly" }
   ];
 
   /* ---- rankings pages ---- */
@@ -395,6 +404,16 @@ async function main() {
 </article>`
     }
   ];
+
+  if (methodHtml) {
+    TOOLS.push({
+      section: "Methodology",
+      slug: "methodology",
+      title: `How These Rankings Are Built — Methodology | ${BRAND}`,
+      desc: `The method behind the board: replacement-level values rebuilt for every league size, tiers cut by optimal one-dimensional clustering, and projections published as ranges.`,
+      seo: methodHtml
+    });
+  }
 
   for (const t of TOOLS) {
     const toolUrl = SITE + "/" + t.slug;
