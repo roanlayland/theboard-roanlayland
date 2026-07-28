@@ -473,6 +473,9 @@
       text-transform:uppercase;padding:7px 12px;transition:border-color .12s,color .12s}
     .tb-share a:hover,.tb-share button:hover{border-color:var(--turf);color:var(--turf)}
     .tb-share button.done{border-color:var(--turf);color:var(--turf)}
+    body.tb-bare-mast .mast-title{display:none}
+    body.tb-bare-mast .mast-meta{margin-left:auto}
+    body.tb-bare-mast header{padding-bottom:10px}
     #method-view{padding-top:8px;max-width:760px}
     #method-view .article-body h2{font-family:'Barlow Condensed',sans-serif;font-weight:700;
       font-size:17px;text-transform:uppercase;letter-spacing:.12em;color:var(--turf);
@@ -618,6 +621,8 @@
 
   const origShowSection = showSection;
   showSection = function (section) {
+    /* the analyzer keeps the format pickers but not the board's headline */
+    document.body.classList.toggle("tb-bare-mast", section === "Trade Analyzer");
     if (section === "Methodology") {
       showMethodology();
       go({ type: "section", section: "Methodology" });
