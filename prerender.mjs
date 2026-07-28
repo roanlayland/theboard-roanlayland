@@ -25,7 +25,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 
 /* ----------------------------------------------------------------- config */
-const SITE = process.env.SITE_URL || "https://theboard-roanlayland-m16h.vercel.app";
+const SITE = process.env.SITE_URL || "https://theboardff-roanlayland.vercel.app";
 const BRAND = "The Board";
 const AUTHOR = "Roan Layland";
 const OUT = process.cwd();
