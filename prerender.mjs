@@ -294,6 +294,7 @@ async function main() {
   const urls = [
     { loc: "/", pri: "1.0", freq: "daily" },
     { loc: "/trade-analyzer", pri: "0.9", freq: "weekly" },
+     { loc: "/trade-analyzer/picks", pri: "0.8", freq: "weekly" },
     { loc: "/draft-room", pri: "0.9", freq: "weekly" }
   ];
 
@@ -352,6 +353,25 @@ async function main() {
 </article>`
     },
     {
+      section: "Trade Analyzer",
+      slug: "trade-analyzer/picks",
+      mode: "picks",
+      title: `Fantasy Football Draft Pick Trade Value Calculator 2026 | ${BRAND}`,
+      desc: `Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8-16 team leagues, PPR and Superflex.`,
+      seo: `<article>
+  <h1>2026 Fantasy Football Draft Pick Trade Value Calculator</h1>
+  <p>Most pick charts are a fixed curve someone drew once. This one is derived from the board: a pick is worth the average value of the players ranked around that slot, so it moves as the rankings move and it adjusts to your league size automatically.</p>
+  <h2>How a pick is priced</h2>
+  <ul>
+    <li>Averaged across a four-pick window that leans backwards — two picks before, one after</li>
+    <li>Slots past the end of the ranked board are worth nothing, not a fraction</li>
+    <li>Picks are stored as overall numbers, so 1.15 in a 10-team relabels correctly as 2.07 in an 8-team</li>
+    <li>Adjusts for PPR, Half-PPR, Non-PPR and Superflex</li>
+  </ul>
+  <p>Pick values by ${esc(AUTHOR)}, updated through the 2026 draft season.</p>
+</article>`
+    },
+     {
       section: "Draft Room",
       slug: "draft-room",
       title: `Live Fantasy Football Draft Board 2026 — Free Draft Tracker | ${BRAND}`,
@@ -377,7 +397,7 @@ async function main() {
     const toolUrl = SITE + "/" + t.slug;
     await write(`${t.slug}.html`, stamp(tpl, {
       title: t.title, desc: t.desc, url: toolUrl, seo: t.seo,
-      route: { type: "section", section: t.section },
+      route: { type: "section", section: t.section, mode: t.mode || "players" },
       jsonld: {
         "@context": "https://schema.org", "@type": "WebApplication",
         name: t.title, description: t.desc, url: toolUrl, publisher,
