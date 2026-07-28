@@ -1,5 +1,5 @@
 /* ==========================================================================
-   THE BOARD — router + SEO layer   v1
+   THE BOARD — router + SEO layer   v2
    --------------------------------------------------------------------------
    HOW TO INSTALL
    Paste this entire block inside a SECOND <script> tag, immediately before
@@ -35,7 +35,7 @@
   "use strict";
 
   /* --- the one thing to edit: your production origin, no trailing slash --- */
-  const CANONICAL_ORIGIN = "https://theboard-roanlayland.vercel.app";
+  const CANONICAL_ORIGIN = location.origin;
   const BRAND = "The Board";
 
   /* ---------------------------------------------------------------- utils */
@@ -76,7 +76,7 @@
     const q = new URLSearchParams();
     if (activeTeams !== "10") q.set("teams", activeTeams);
     if (activeFormat !== "full_ppr") q.set("scoring", SCORING_SLUG[activeFormat]);
-  if (activeRoster === "superflex") q.set("roster", "superflex");
+    if (activeRoster === "superflex") q.set("roster", "superflex");
     const s = q.toString();
     return s ? "?" + s : "";
   }
@@ -136,9 +136,10 @@
       return Object.assign({ type: "player", slug: (seg[1] || "").toLowerCase() }, fmt);
 
     const section = SLUG_SECTION[head];
-if (section === "Trade Analyzer")
+    if (section === "Trade Analyzer")
       return Object.assign({ type: "section", section,
         mode: (seg[1] || "").toLowerCase() === "picks" ? "picks" : "players" }, fmt);
+
     if (section === "Draft Room")
       return Object.assign({ type: "section", section }, fmt);
 
@@ -215,8 +216,8 @@ if (section === "Trade Analyzer")
         } else {
           currentState = { type: "section", section: r.section };
         }
-      } } else if (r.type === "section") {
-        if (r.section === "Trade Analyzer" && r.mode) tradeMode = r.mode;
+      } else if (r.type === "section") {
+        if (r.section === "Trade Analyzer" && r.mode && typeof tradeMode !== "undefined") tradeMode = r.mode;
         showSection(r.section);
         currentState = { type: "section", section: r.section, mode: r.mode };
       } else {
@@ -463,19 +464,20 @@ if (section === "Trade Analyzer")
   }
 
   /* --------------------------------------------------- patch the app ---- */
-if (typeof setTradeMode === "function") {
+  if (typeof setTradeMode === "function") {
     const origSetTradeMode = setTradeMode;
     setTradeMode = function (mode) {
       origSetTradeMode(mode);
       go({ type: "section", section: "Trade Analyzer", mode: tradeMode });
     };
   }
+
   const origShowSection = showSection;
   showSection = function (section) {
     origShowSection(section);
     if (section === "Rankings") go({ type: "rankings", tab: active });
     else go({ type: "section", section,
-      mode: section === "Trade Analyzer" ? tradeMode : undefined });
+      mode: section === "Trade Analyzer" && typeof tradeMode !== "undefined" ? tradeMode : undefined });
     dropSeoBlock();
   };
 
