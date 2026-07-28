@@ -402,6 +402,8 @@
     tag('meta[property="og:description"]', "content", m.desc);
     tag('meta[property="og:url"]', "content", url);
     tag('meta[property="og:type"]', "content", state.type === "article" ? "article" : "website");
+    tag('meta[property="og:image"]', "content", CANONICAL_ORIGIN + "/preview.png");
+    tag('meta[name="twitter:image"]', "content", CANONICAL_ORIGIN + "/preview.png");
     tag('meta[name="twitter:title"]', "content", m.title);
     tag('meta[name="twitter:description"]', "content", m.desc);
     writeJsonLd(state, m, url);
