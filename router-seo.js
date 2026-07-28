@@ -76,7 +76,7 @@
     const q = new URLSearchParams();
     if (activeTeams !== "10") q.set("teams", activeTeams);
     if (activeFormat !== "full_ppr") q.set("scoring", SCORING_SLUG[activeFormat]);
-    if (activeRoster !== "1qb") q.set("roster", "superflex");
+  if (activeRoster === "superflex") q.set("roster", "superflex");
     const s = q.toString();
     return s ? "?" + s : "";
   }
@@ -153,10 +153,13 @@
   }
 
   function applyFormat(r) {
+    const teams   = r.teams   || "10";
+    const scoring = r.scoring || "full_ppr";
+    const roster  = r.roster  || "1qb";
     let touched = false;
-    if (r.teams && r.teams !== activeTeams) { activeTeams = r.teams; setPicker("teams-picker", r.teams); touched = true; }
-    if (r.scoring && r.scoring !== activeFormat) { activeFormat = r.scoring; setPicker("format-picker", r.scoring); touched = true; }
-    if (r.roster && r.roster !== activeRoster) { activeRoster = r.roster; setPicker("roster-picker", r.roster); touched = true; }
+    if (teams   !== activeTeams)  { activeTeams  = teams;   setPicker("teams-picker",  teams);   touched = true; }
+    if (scoring !== activeFormat) { activeFormat = scoring; setPicker("format-picker", scoring); touched = true; }
+    if (roster  !== activeRoster) { activeRoster = roster;  setPicker("roster-picker", roster);  touched = true; }
     if (touched) {
       if (typeof updateMeta === "function") updateMeta();
       if (typeof updateTitle === "function") updateTitle(SCORING_LABEL[activeFormat]);
