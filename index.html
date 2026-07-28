@@ -3,7 +3,33 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title id="doc-title">The Board — 2026 PPR Draft Rankings</title>
+
+<!-- ============================================================
+     SITE METADATA
+     If you ever change the URL, update the two lines marked ↓ URL.
+     Everything else can stay as-is.
+     ============================================================ -->
+<title id="doc-title">The Board — 2026 PPR Draft Rankings · Roan Layland</title>
+<meta name="description" content="2026 fantasy football draft rankings, tiers, and trade values by Roan Layland. Adjusts for team count, PPR scoring, and Superflex, with a live draft board and trade analyzer.">
+<meta name="author" content="Roan Layland">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://theboard-roanlayland.vercel.app/">          <!-- ↓ URL -->
+
+<!-- how the link renders when shared in a group chat, Discord, Reddit, or X -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="The Board">
+<meta property="og:title" content="The Board — 2026 Fantasy Football Draft Rankings">
+<meta property="og:description" content="Rankings, tiers, and trade values by Roan Layland. Adjusts for team count, PPR scoring, and Superflex.">
+<meta property="og:url" content="https://theboard-roanlayland.vercel.app/">     <!-- ↓ URL -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Board — 2026 Fantasy Football Draft Rankings">
+<meta name="twitter:description" content="Rankings, tiers, and trade values by Roan Layland. Adjusts for team count, PPR scoring, and Superflex.">
+<meta property="og:image" content="https://theboard-roanlayland.vercel.app/preview.png">
+<meta name="twitter:image" content="https://theboard-roanlayland.vercel.app/preview.png">
+<!-- favicon, drawn inline so there's no second file to manage -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%232F5233'/><text x='50' y='74' font-family='Helvetica,Arial,sans-serif' font-size='68' font-weight='700' text-anchor='middle' fill='%23EDEEE9'>B</text></svg>">
+<meta name="theme-color" content="#2F5233">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -791,7 +817,7 @@
     <button class="side-nav-item" data-section="Draft Room">Draft Room</button>
   </nav>
   <div class="side-nav-foot">
-    <p>The Board · 2026<br>Draft season</p>
+    <p>The Board · 2026<br>Draft season<br>By Roan Layland</p>
     <button class="night-toggle" id="night-toggle" aria-pressed="false">◐ Night mode</button>
   </div>
 </aside>
@@ -802,6 +828,7 @@
   <header>
     <div class="mast">
       <div class="mast-title">
+        <p class="mast-kicker">By Roan Layland</p>
         <h1 id="page-title">PPR Draft Rankings</h1>
       </div>
       <div class="mast-meta">
@@ -1841,17 +1868,17 @@ const EDITORIAL_SUBS = {
 
 const DEEP_DIVE_SAMPLE = {
   "Deep Dives": [
-    {id:"chase-ceiling", title:"Ja'Marr Chase Doesn't Have a Ceiling, He Has a Floor Problem for Everyone Else", dek:"Why the WR1 overall pick is underpriced once you account for target concentration.", player_name:"Ja'Marr Chase", pos:"WR", team:"CIN", tier:"1", author:"M. Hargrove", date:"Jul 8, 2026", read_time:"6 min", featured:"TRUE", body:"Chase's target share and red-zone role make him the clearest high-end receiver in this class."},
-    {id:"gibbs-committee", title:"Jahmyr Gibbs Has the Best Ceiling in Fantasy and the Committee Tax That Comes With It", dek:"Detroit's split caps his touches, but not his explosiveness.", player_name:"Jahmyr Gibbs", pos:"RB", team:"DET", tier:"2", author:"D. Okafor", date:"Jul 9, 2026", read_time:"5 min", body:"Gibbs' explosiveness makes him an elite value even with a committee tax."}
+    {id:"chase-ceiling", title:"Ja'Marr Chase Doesn't Have a Ceiling, He Has a Floor Problem for Everyone Else", dek:"Why the WR1 overall pick is underpriced once you account for target concentration.", player_name:"Ja'Marr Chase", pos:"WR", team:"CIN", tier:"1", author:"Roan Layland", date:"Jul 8, 2026", read_time:"6 min", featured:"TRUE", body:"Chase's target share and red-zone role make him the clearest high-end receiver in this class."},
+    {id:"gibbs-committee", title:"Jahmyr Gibbs Has the Best Ceiling in Fantasy and the Committee Tax That Comes With It", dek:"Detroit's split caps his touches, but not his explosiveness.", player_name:"Jahmyr Gibbs", pos:"RB", team:"DET", tier:"2", author:"Roan Layland", date:"Jul 9, 2026", read_time:"5 min", body:"Gibbs' explosiveness makes him an elite value even with a committee tax."}
   ],
   "Values": [
-    {id:"nabers-value", title:"Malik Nabers Is the Best Value Play at the Turn", dek:"A target hog in an unstable quarterback situation is still a strong value.", player_name:"Malik Nabers", pos:"WR", team:"NYG", tier:"2", author:"D. Okafor", date:"Jul 11, 2026", read_time:"5 min", featured:"TRUE", body:"Volume this concentrated rarely falls this far in drafts."}
+    {id:"nabers-value", title:"Malik Nabers Is the Best Value Play at the Turn", dek:"A target hog in an unstable quarterback situation is still a strong value.", player_name:"Malik Nabers", pos:"WR", team:"NYG", tier:"2", author:"Roan Layland", date:"Jul 11, 2026", read_time:"5 min", featured:"TRUE", body:"Volume this concentrated rarely falls this far in drafts."}
   ],
   "Overpriced": [
-    {id:"overpriced-qb", title:"The Quarterback Premium Is Getting a Little Too Rich", dek:"A premium on passing volume can outpace the actual fantasy edge.", player_name:"Josh Allen", pos:"QB", team:"BUF", tier:"1", author:"M. Hargrove", date:"Jul 10, 2026", read_time:"4 min", featured:"TRUE", body:"The rush floor is real, but the ADP premium can still overpay for the cut."}
+    {id:"overpriced-qb", title:"The Quarterback Premium Is Getting a Little Too Rich", dek:"A premium on passing volume can outpace the actual fantasy edge.", player_name:"Josh Allen", pos:"QB", team:"BUF", tier:"1", author:"Roan Layland", date:"Jul 10, 2026", read_time:"4 min", featured:"TRUE", body:"The rush floor is real, but the ADP premium can still overpay for the cut."}
   ],
   "Bold Predictions": [
-    {id:"bowers-bold", title:"Brock Bowers Finishes as the TE1 in Half-PPR", dek:"The positional edge is real and the market still hasn't priced it in.", player_name:"Brock Bowers", pos:"TE", team:"LV", tier:"1", author:"M. Hargrove", date:"Jul 3, 2026", read_time:"5 min", featured:"TRUE", body:"Bowers is a true position-scarcity asset and he should be treated like one."}
+    {id:"bowers-bold", title:"Brock Bowers Finishes as the TE1 in Half-PPR", dek:"The positional edge is real and the market still hasn't priced it in.", player_name:"Brock Bowers", pos:"TE", team:"LV", tier:"1", author:"Roan Layland", date:"Jul 3, 2026", read_time:"5 min", featured:"TRUE", body:"Bowers is a true position-scarcity asset and he should be treated like one."}
   ]
 };
 
@@ -1947,12 +1974,12 @@ function articleTime(d){
 
 function ddInitials(name){
   const parts = String(name||"").trim().split(/\s+/).filter(Boolean);
-  if(!parts.length) return "TB";
+  if(!parts.length) return "RL";
   if(parts.length===1) return parts[0].slice(0,2).toUpperCase();
   return (parts[0][0] + parts[parts.length-1][0]).toUpperCase();
 }
 function ddByline(item){
-  const author = item.author || "The Board Staff";
+  const author = item.author || "Roan Layland";
   const bits = [item.date, item.read_time].filter(Boolean).join(" · ");
   const player = item.player_name
     ? `${item.player_name}${[item.pos,item.team].filter(Boolean).length ? ` · ${[item.pos,item.team].filter(Boolean).join(", ")}` : ""}`
@@ -2025,7 +2052,7 @@ function renderEditorial(section){
   laneEl.style.setProperty("--lane", LANE_ACCENTS[section] || "var(--turf)");
   laneEl.classList.add("lane-accent");
 
-  const metaLine = item => `${item.author||"The Board Staff"} · ${item.date||""} · ${item.read_time||""}${item.player_name?` · ${item.player_name} (${[item.pos,item.team].filter(Boolean).join(", ")})`:""}`;
+  const metaLine = item => `${item.author||"Roan Layland"} · ${item.date||""} · ${item.read_time||""}${item.player_name?` · ${item.player_name} (${[item.pos,item.team].filter(Boolean).join(", ")})`:""}`;
 
   const featured = document.getElementById("deep-dives-featured");
   const list = document.getElementById("deep-dives-list");
@@ -2107,7 +2134,7 @@ function renderEditorial(section){
 function openArticle(item){
   if(!item) return;
   stopCarousel();
-  const meta = [item.author||"The Board Staff", item.date, item.read_time].filter(Boolean).join(" · ");
+  const meta = [item.author||"Roan Layland", item.date, item.read_time].filter(Boolean).join(" · ");
   const playerLine = item.player_name ? `${item.player_name}${item.pos||item.team?` (${[item.pos,item.team].filter(Boolean).join(", ")})`:""}` : "";
   const bodyHtml = (item.body||"").split(/\n+/).map(x=>x.trim()).filter(Boolean).map(par=>
       par.startsWith("> ") ? `<p class="pullquote">${escapeHtml(par.slice(2).trim())}</p>` : `<p>${escapeHtml(par)}</p>`
@@ -2761,7 +2788,7 @@ function updateTitle(label){
     title.textContent = `${suffix} Draft Rankings`;
   }
   if(docTitle){
-    docTitle.textContent = `The Board — 2026 ${suffix} Draft Rankings`;
+    docTitle.textContent = `The Board — 2026 ${suffix} Draft Rankings · Roan Layland`;
   }
 }
 
@@ -2856,5 +2883,6 @@ window.addEventListener("scroll", updateReadProgress, {passive:true});
   }, 1900);
 })();
 </script>
+  <script src="/router-seo.js"></script>
 </body>
 </html>
