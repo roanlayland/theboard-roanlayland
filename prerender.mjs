@@ -294,7 +294,7 @@ async function main() {
   const urls = [
     { loc: "/", pri: "1.0", freq: "daily" },
     { loc: "/trade-analyzer", pri: "0.9", freq: "weekly" },
-     { loc: "/trade-analyzer/picks", pri: "0.8", freq: "weekly" },
+    { loc: "/trade-analyzer/picks", pri: "0.8", freq: "weekly" },
     { loc: "/draft-room", pri: "0.9", freq: "weekly" }
   ];
 
@@ -326,7 +326,8 @@ async function main() {
     urls.push({ loc, pri: "0.9", freq: "daily" });
   }
   console.log(`· ${RANKING_PAGES.length} rankings pages`);
-/* ---- tool pages ---- */
+
+  /* ---- tool pages ---- */
   const top12 = board(players, { teams: "10", scoring: "full_ppr", roster: "1qb" }).slice(0, 12);
   const topList = top12.map((p, i) =>
     `<li>${i + 1}. <a href="/player/${slugify(p.name)}">${esc(p.name)}</a> — value ${Math.round(baseValue(p, "full_ppr", "1qb"))}</li>`).join("");
@@ -335,8 +336,9 @@ async function main() {
     {
       section: "Trade Analyzer",
       slug: "trade-analyzer",
-      title: `Fantasy Football Trade Value Calculator 2026 — Players & Draft Picks | ${BRAND}`,
-      desc: `Free 2026 fantasy football trade calculator. Values adjust for 8-16 team leagues, PPR, Half-PPR, Non-PPR and Superflex, and it prices draft picks too.`,
+      mode: "players",
+      title: `Fantasy Football Trade Value Calculator 2026 — Player Trades | ${BRAND}`,
+      desc: `Free 2026 fantasy football trade calculator. Player values adjust for league size (8-16 team), PPR, Half-PPR, Non-PPR and Superflex.`,
       seo: `<article>
   <h1>2026 Fantasy Football Trade Value Calculator</h1>
   <p>Add the players on each side of a proposed deal and this calculator totals each side's value and tells you which way it tilts. Unlike a fixed trade chart, every value is replacement-adjusted for your league: the same player is worth more in a 16-team league than an 8-team one, and quarterbacks are worth far more in Superflex.</p>
@@ -345,10 +347,10 @@ async function main() {
     <li>League size, from 8-team through 16-team</li>
     <li>Full PPR, Half-PPR and Non-PPR scoring</li>
     <li>1QB and Superflex roster settings</li>
-    <li>Draft picks, priced off the players ranked around that slot</li>
   </ul>
   <h2>Highest trade values right now</h2>
   <ul>${topList}</ul>
+  <p>Trading draft picks instead? Use the <a href="/trade-analyzer/picks">draft pick trade value calculator</a>.</p>
   <p>Values by ${esc(AUTHOR)}, updated through the 2026 draft season.</p>
 </article>`
     },
@@ -368,10 +370,11 @@ async function main() {
     <li>Picks are stored as overall numbers, so 1.15 in a 10-team relabels correctly as 2.07 in an 8-team</li>
     <li>Adjusts for PPR, Half-PPR, Non-PPR and Superflex</li>
   </ul>
+  <p>Trading players instead? Use the <a href="/trade-analyzer">player trade value calculator</a>.</p>
   <p>Pick values by ${esc(AUTHOR)}, updated through the 2026 draft season.</p>
 </article>`
     },
-     {
+    {
       section: "Draft Room",
       slug: "draft-room",
       title: `Live Fantasy Football Draft Board 2026 — Free Draft Tracker | ${BRAND}`,
@@ -402,11 +405,13 @@ async function main() {
         "@context": "https://schema.org", "@type": "WebApplication",
         name: t.title, description: t.desc, url: toolUrl, publisher,
         applicationCategory: "SportsApplication",
+        operatingSystem: "Any",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" }
       }
     }));
   }
-  console.log(`· 2 tool pages`);
+  console.log(`· ${TOOLS.length} tool pages`);
+
   /* ---- player pages ---- */
   const base = board(players, { teams: "10", scoring: "full_ppr", roster: "1qb" });
   const posCounter = {};
