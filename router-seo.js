@@ -89,7 +89,8 @@
     switch (state.type) {
       case "player":  return "/player/" + state.slug;
       case "article": return "/" + SECTION_SLUG[state.section] + "/" + state.slug;
-      case "section": return "/" + SECTION_SLUG[state.section];
+      case "section": return "/" + SECTION_SLUG[state.section] +
+        (state.section === "Trade Analyzer" && state.mode === "picks" ? "/picks" : "");
       default:        return rankingsPath();
     }
   }
@@ -135,7 +136,10 @@
       return Object.assign({ type: "player", slug: (seg[1] || "").toLowerCase() }, fmt);
 
     const section = SLUG_SECTION[head];
-    if (section === "Trade Analyzer" || section === "Draft Room")
+if (section === "Trade Analyzer")
+      return Object.assign({ type: "section", section,
+        mode: (seg[1] || "").toLowerCase() === "picks" ? "picks" : "players" }, fmt);
+    if (section === "Draft Room")
       return Object.assign({ type: "section", section }, fmt);
 
     if (section && LANES.includes(section))
@@ -211,9 +215,10 @@
         } else {
           currentState = { type: "section", section: r.section };
         }
-      } else if (r.type === "section") {
+      } } else if (r.type === "section") {
+        if (r.section === "Trade Analyzer" && r.mode) tradeMode = r.mode;
         showSection(r.section);
-        currentState = { type: "section", section: r.section };
+        currentState = { type: "section", section: r.section, mode: r.mode };
       } else {
         active = r.tab || "ALL";
         showSection("Rankings");
@@ -285,11 +290,17 @@
     }
     if (state.type === "section") {
       const s = state.section;
-      if (s === "Trade Analyzer")
+      if (s === "Trade Analyzer") {
+        if (state.mode === "picks")
+          return {
+            title: `Fantasy Football Draft Pick Trade Value Calculator 2026 | ${BRAND}`,
+            desc: `Free 2026 draft pick trade value calculator. Prices any pick off the players ranked around that slot, adjusted for 8–16 team leagues, PPR and Superflex.`
+          };
         return {
-          title: `Fantasy Football Trade Value Calculator 2026 — Players & Draft Picks | ${BRAND}`,
-          desc: `Free 2026 fantasy football trade calculator. Values adjust for league size (8–16 team), PPR, Half-PPR, Non-PPR and Superflex, and it prices draft picks too.`
+          title: `Fantasy Football Trade Value Calculator 2026 — Player Trades | ${BRAND}`,
+          desc: `Free 2026 fantasy football trade calculator. Player values adjust for league size (8–16 team), PPR, Half-PPR, Non-PPR and Superflex.`
         };
+      }
       if (s === "Draft Room")
         return {
           title: `Live Fantasy Football Draft Board 2026 — Free Draft Tracker | ${BRAND}`,
@@ -452,11 +463,19 @@
   }
 
   /* --------------------------------------------------- patch the app ---- */
+if (typeof setTradeMode === "function") {
+    const origSetTradeMode = setTradeMode;
+    setTradeMode = function (mode) {
+      origSetTradeMode(mode);
+      go({ type: "section", section: "Trade Analyzer", mode: tradeMode });
+    };
+  }
   const origShowSection = showSection;
   showSection = function (section) {
     origShowSection(section);
     if (section === "Rankings") go({ type: "rankings", tab: active });
-    else go({ type: "section", section });
+    else go({ type: "section", section,
+      mode: section === "Trade Analyzer" ? tradeMode : undefined });
     dropSeoBlock();
   };
 
